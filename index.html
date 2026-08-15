@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chamod OFFICIAL</title>
+<title>CYBER CHAMIYA</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
 
@@ -56,6 +56,23 @@ body::before {
 @keyframes moveGrid {
     0% { transform: translate(0, 0); }
     100% { transform: translate(100px, 100px); }
+}
+
+/* පොඩි පාට පාට පාවෙන බෝල */
+.particle {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 2;
+    opacity: 0.6;
+    animation: floatParticle linear infinite;
+    box-shadow: 0 0 15px currentColor;
+}
+
+@keyframes floatParticle {
+    0% { transform: translateY(110vh) translateX(0); }
+    50% { transform: translateY(50vh) translateX(100px); }
+    100% { transform: translateY(-100px) translateX(-100px); }
 }
 
 /* වටේ කැරකෙන බල්බ් */
@@ -173,6 +190,35 @@ body::before {
     50% { transform: scale(1.1); box-shadow: 0 0 40px rgba(37, 211, 102, 1); }
 }
 
+/* Security Popup */
+.security-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    background: rgba(0, 0, 0, 0.98);
+    border: 2px solid #ff0000;
+    padding: 30px;
+    border-radius: 15px;
+    z-index: 10004;
+    text-align: center;
+    transition: 0.3s;
+    max-width: 350px;
+}
+.security-popup.show { transform: translate(-50%, -50%) scale(1); }
+.security-popup h3 { color: #ff0000; font-family: 'Orbitron', sans-serif; margin-bottom: 15px; }
+.security-popup.yt-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 25px;
+    background: #ff0000;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 900;
+    font-family: 'Orbitron', sans-serif;
+}
+
 .lk-flag { position: fixed; top: 20px; right: 20px; width: 70px; height: 45px; z-index: 10001; border: 2px solid #00eaff; border-radius: 5px; box-shadow: 0 0 25px rgba(0, 234, 255, 0.8); animation: floatFlag 3s ease-in-out infinite; }
 @keyframes floatFlag { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 
@@ -180,7 +226,7 @@ body::before {
 .system-popup.show { transform: translate(-50%, -50%) scale(1); }
 
 .glitch { font-family: 'Orbitron', sans-serif; font-size: 45px; font-weight: 900; text-transform: uppercase; position: relative; color: #fff; letter-spacing: 3px; animation: glitch 2s infinite; }
-.glitch::before,.glitch::after { content: 'CHAMOD OFFICIAL'; position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+.glitch::before,.glitch::after { content: 'CYBER CHAMIYA'; position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
 .glitch::before { animation: glitch-1 0.5s infinite; color: #00eaff; z-index: -1; }
 .glitch::after { animation: glitch-2 0.5s infinite; color: #ff00a8; z-index: -2; }
 @keyframes glitch { 0%, 100% { text-shadow: 0 0 20px rgba(255, 0, 200, 0.3); } 50% { text-shadow: 0 0 40px rgba(0, 234, 255, 0.5); } }
@@ -195,6 +241,7 @@ header { text-align: center; padding: 40px 20px; }
 .menu { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 30px; }
 .card { padding: 30px 15px; border-radius: 20px; text-align: center; background: rgba(0, 234, 255, 0.05); border: 1px solid rgba(0, 234, 255, 0.3); backdrop-filter: blur(20px); transition: all 0.4s ease; cursor: pointer; font-weight: 700; }
 .card:hover { transform: translateY(-10px); background: rgba(255, 0, 168, 0.1); border: 1px solid #ff00a8; box-shadow: 0 10px 40px rgba(255, 0, 168, 0.4); }
+.card.locked { opacity: 0.5; border: 1px solid #ff0000; }
 .icon { font-size: 45px; margin-bottom: 15px; }
 .card h3 { font-size: 22px; margin-bottom: 5px; color: #fff; font-family: 'Orbitron', sans-serif; }
 .contact-num { color: #00eaff; text-decoration: none; font-weight: bold; font-size: 18px; }
@@ -217,6 +264,15 @@ footer { text-align: center; padding: 50px 10px 80px; color: #888; font-weight: 
 <div class="heart-bg">❤️</div>
 <div class="flash-screen" id="flash"></div>
 
+<!-- Security Popup -->
+<div class="security-popup" id="securityPopup">
+    <h3>🔒 ACCESS DENIED</h3>
+    <p>Please SUBSCRIBE to our YouTube Channel first to unlock this content!</p>
+    <a href="https://youtube.com/@chamodlakshan-p8j1g?si=3Aai7hbIRcLEJuZr" target="_blank" class="yt-btn">SUBSCRIBE NOW</a>
+    <p style="margin-top:10px; font-size:12px; color:#aaa;">After subscribing click "I SUBSCRIBED" below</p>
+    <button onclick="checkSubscription()" class="button" style="padding:10px 20px; margin-top:10px;">I SUBSCRIBED</button>
+</div>
+
 <!-- වටේ කැරකෙන බල්බ් -->
 <div class="bulb" style="animation-delay: 0s;"></div>
 <div class="bulb" style="animation-delay: 3s; background: #ff00a8; box-shadow: 0 0 20px #ff00a8;"></div>
@@ -236,14 +292,14 @@ footer { text-align: center; padding: 50px 10px 80px; color: #888; font-weight: 
 <div class="container">
 <header>
 <img src="https://i.gifer.com/7efs.gif" alt="Anime Fighter" class="anime-fighter">
-<h1 class="glitch">CHAMOD OFFICIAL</h1>
-<p class="subtitle">WELCOME TO THE FUTURE OF WEB</p>
+<h1 class="glitch">CYBER CHAMIYA</h1>
+<p class="subtitle">WELCOME TO THE HACKING SQUAD</p>
 </header>
 
 <div class="menu">
-    <div class="card" onclick="showSystemStart()"><div class="icon">👤</div><h3>ABOUT ME</h3><p style="color:#aaa;">WHO AM I?</p></div>
-    <div class="card" onclick="showSystemStart()"><div class="icon">🚀</div><h3>PROJECTS</h3><p style="color:#aaa;">MY CREATIONS</p></div>
-    <div class="card" onclick="showSystemStart()"><div class="icon">📁</div><h3>FILES</h3><p style="color:#aaa;">DOWNLOADS</p></div>
+    <div class="card" onclick="openChannel()"><div class="icon">📢</div><h3>JOIN UPDATES CHANNEL</h3><p style="color:#25D366;">💬 WhatsApp Channel</p></div>
+    <div class="card locked" onclick="checkAccess('gaming')"><div class="icon">🎮</div><h3>GAMING PANNELS UPDATES</h3><p style="color:#aaa;">PANELS & MODS</p></div>
+    <div class="card locked" onclick="checkAccess('files')"><div class="icon">📁</div><h3>FILES</h3><p style="color:#aaa;">DOWNLOADS</p></div>
     <div class="card"><div class="icon">📞</div><h3>CONTACT</h3><a href="tel:+94703247462" class="contact-num">+94 70 324 7462</a></div>
 </div>
 
@@ -254,12 +310,12 @@ footer { text-align: center; padding: 50px 10px 80px; color: #888; font-weight: 
 
 <section>
     <h2>👋 WELCOME</h2>
-    <p>Explore my latest projects, creative works, and premium files. Everything you need is right here.</p>
-    <button class="button" onclick="showSystemStart()">EXPLORE NOW</button>
+    <p>Join our squad and get exclusive gaming panels, mods and updates.</p>
+    <button class="button" onclick="openChannel()">JOIN NOW</button>
 </section>
 
 <footer>
-    © 2026 CHAMOD OFFICIAL <br>
+    © 2026 CYBER CHAMIYA <br>
     MADE WITH ❤️ IN SRI LANKA <br>
     <span class="team-text">TEAM OF CRASH OF DELTA</span>
 </footer>
@@ -268,6 +324,22 @@ footer { text-align: center; padding: 50px 10px 80px; color: #888; font-weight: 
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+
+    // පොඩි පාට පාට පාවෙන බෝල 20
+    const particleColors = ['#00eaff', '#ff00a8', '#ffff00', '#00ff73', '#7b00ff'];
+    for(let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        const size = Math.random() * 6 + 4;
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
+        particle.style.background = particleColors[Math.floor(Math.random() * particleColors.length)];
+        particle.style.color = particle.style.background;
+        particle.style.left = Math.random() * 100 + 'vw';
+        particle.style.animationDuration = Math.random() * 15 + 10 + 's';
+        particle.style.animationDelay = Math.random() * 5 + 's';
+        document.body.appendChild(particle);
+    }
 
     // වලාකුලු
     function createCloud() {
@@ -328,6 +400,32 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     setInterval(lightningStrike, Math.random() * 3000 + 2000);
+
+    // Security System
+    window.openChannel = function() {
+        window.open('https://whatsapp.com/channel/0029VbDYvhGDeON7DqDxnw0i', '_blank');
+    }
+
+    window.checkAccess = function(type) {
+        if(localStorage.getItem('subscribed') === 'true') {
+            showSystemStart();
+            alert(type === 'gaming'? 'Opening GAMING PANNELS...' : 'Opening FILES...');
+        } else {
+            document.getElementById('securityPopup').classList.add('show');
+        }
+    }
+
+    window.checkSubscription = function() {
+        // Note: Real YouTube subscription check needs API. This is client-side simulation
+        localStorage.setItem('subscribed', 'true');
+        document.getElementById('securityPopup').classList.remove('show');
+        document.querySelectorAll('.card.locked').forEach(card => {
+            card.classList.remove('locked');
+            card.style.opacity = '1';
+            card.style.border = '1px solid #00ff73';
+        });
+        alert('✅ Access Granted! You can now open all sections.');
+    }
 
     window.showSystemStart = function() {
         const popup = document.getElementById('systemPopup');
