@@ -203,13 +203,14 @@ body::before {
     z-index: 10004;
     text-align: center;
     transition: 0.3s;
-    max-width: 350px;
+    max-width: 380px;
 }
 .security-popup.show { transform: translate(-50%, -50%) scale(1); }
-.security-popup h3 { color: #ff0000; font-family: 'Orbitron', sans-serif; margin-bottom: 15px; }
+.security-popup h3 { color: #ff0000; font-family: 'Orbitron', sans-serif; margin-bottom: 15px; font-size: 22px; }
+.security-popup p { margin-bottom: 15px; color: #ccc; }
 .security-popup.yt-btn {
-    display: inline-block;
-    margin-top: 15px;
+    display: block;
+    margin: 10px auto;
     padding: 12px 25px;
     background: #ff0000;
     color: white;
@@ -217,6 +218,20 @@ body::before {
     border-radius: 8px;
     font-weight: 900;
     font-family: 'Orbitron', sans-serif;
+    width: 80%;
+}
+.security-popup.check-btn {
+    display: block;
+    margin: 10px auto;
+    padding: 12px 25px;
+    background: #00ff73;
+    color: black;
+    border: none;
+    border-radius: 8px;
+    font-weight: 900;
+    font-family: 'Orbitron', sans-serif;
+    width: 80%;
+    cursor: pointer;
 }
 
 .lk-flag { position: fixed; top: 20px; right: 20px; width: 70px; height: 45px; z-index: 10001; border: 2px solid #00eaff; border-radius: 5px; box-shadow: 0 0 25px rgba(0, 234, 255, 0.8); animation: floatFlag 3s ease-in-out infinite; }
@@ -241,7 +256,7 @@ header { text-align: center; padding: 40px 20px; }
 .menu { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 30px; }
 .card { padding: 30px 15px; border-radius: 20px; text-align: center; background: rgba(0, 234, 255, 0.05); border: 1px solid rgba(0, 234, 255, 0.3); backdrop-filter: blur(20px); transition: all 0.4s ease; cursor: pointer; font-weight: 700; }
 .card:hover { transform: translateY(-10px); background: rgba(255, 0, 168, 0.1); border: 1px solid #ff00a8; box-shadow: 0 10px 40px rgba(255, 0, 168, 0.4); }
-.card.locked { opacity: 0.5; border: 1px solid #ff0000; }
+.card.locked { opacity: 0.5; border: 1px solid #ff0000; cursor: not-allowed; }
 .icon { font-size: 45px; margin-bottom: 15px; }
 .card h3 { font-size: 22px; margin-bottom: 5px; color: #fff; font-family: 'Orbitron', sans-serif; }
 .contact-num { color: #00eaff; text-decoration: none; font-weight: bold; font-size: 18px; }
@@ -264,13 +279,12 @@ footer { text-align: center; padding: 50px 10px 80px; color: #888; font-weight: 
 <div class="heart-bg">❤️</div>
 <div class="flash-screen" id="flash"></div>
 
-<!-- Security Popup -->
+<!-- Security Popup - FIXED -->
 <div class="security-popup" id="securityPopup">
-    <h3>🔒 ACCESS DENIED</h3>
-    <p>Please SUBSCRIBE to our YouTube Channel first to unlock this content!</p>
-    <a href="https://youtube.com/@chamodlakshan-p8j1g?si=3Aai7hbIRcLEJuZr" target="_blank" class="yt-btn">SUBSCRIBE NOW</a>
-    <p style="margin-top:10px; font-size:12px; color:#aaa;">After subscribing click "I SUBSCRIBED" below</p>
-    <button onclick="checkSubscription()" class="button" style="padding:10px 20px; margin-top:10px;">I SUBSCRIBED</button>
+    <h3>🔒 ACCESS LOCKED</h3>
+    <p>Subscribe to our YouTube Channel to unlock GAMING PANELS & FILES!</p>
+    <a href="https://youtube.com/@chamodlakshan-p8j1g?si=3Aai7hbIRcLEJuZr" target="_blank" class="yt-btn">🔴 SUBSCRIBE NOW</a>
+    <button onclick="checkSubscription()" class="check-btn">✅ I SUBSCRIBED - CHECK</button>
 </div>
 
 <!-- වටේ කැරකෙන බල්බ් -->
@@ -298,8 +312,8 @@ footer { text-align: center; padding: 50px 10px 80px; color: #888; font-weight: 
 
 <div class="menu">
     <div class="card" onclick="openChannel()"><div class="icon">📢</div><h3>JOIN UPDATES CHANNEL</h3><p style="color:#25D366;">💬 WhatsApp Channel</p></div>
-    <div class="card locked" onclick="checkAccess('gaming')"><div class="icon">🎮</div><h3>GAMING PANNELS UPDATES</h3><p style="color:#aaa;">PANELS & MODS</p></div>
-    <div class="card locked" onclick="checkAccess('files')"><div class="icon">📁</div><h3>FILES</h3><p style="color:#aaa;">DOWNLOADS</p></div>
+    <div class="card locked" id="gamingCard" onclick="checkAccess('gaming')"><div class="icon">🎮</div><h3>GAMING PANNELS UPDATES</h3><p style="color:#aaa;">PANELS & MODS</p></div>
+    <div class="card locked" id="filesCard" onclick="checkAccess('files')"><div class="icon">📁</div><h3>FILES</h3><p style="color:#aaa;">DOWNLOADS</p></div>
     <div class="card"><div class="icon">📞</div><h3>CONTACT</h3><a href="tel:+94703247462" class="contact-num">+94 70 324 7462</a></div>
 </div>
 
@@ -324,6 +338,11 @@ footer { text-align: center; padding: 50px 10px 80px; color: #888; font-weight: 
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+
+    // Page load වෙනකොටම subscribe කරාද බලනවා
+    if(localStorage.getItem('subscribed') === 'true') {
+        unlockCards();
+    }
 
     // පොඩි පාට පාට පාවෙන බෝල 20
     const particleColors = ['#00eaff', '#ff00a8', '#ffff00', '#00ff73', '#7b00ff'];
@@ -401,7 +420,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     setInterval(lightningStrike, Math.random() * 3000 + 2000);
 
-    // Security System
+    // Security System - FIXED
     window.openChannel = function() {
         window.open('https://whatsapp.com/channel/0029VbDYvhGDeON7DqDxnw0i', '_blank');
     }
@@ -409,22 +428,29 @@ document.addEventListener('DOMContentLoaded', function() {
     window.checkAccess = function(type) {
         if(localStorage.getItem('subscribed') === 'true') {
             showSystemStart();
-            alert(type === 'gaming'? 'Opening GAMING PANNELS...' : 'Opening FILES...');
+            setTimeout(() => {
+                alert(type === 'gaming'? '🎮 Opening GAMING PANNELS...' : '📁 Opening FILES...');
+            }, 500);
         } else {
             document.getElementById('securityPopup').classList.add('show');
         }
     }
 
     window.checkSubscription = function() {
-        // Note: Real YouTube subscription check needs API. This is client-side simulation
+        // User YouTube ගිහින් ආවට පස්සේ මේක click කරනවා
         localStorage.setItem('subscribed', 'true');
         document.getElementById('securityPopup').classList.remove('show');
+        unlockCards();
+        alert('✅ ACCESS GRANTED!\n\nNow you can access GAMING PANELS & FILES');
+    }
+
+    function unlockCards() {
         document.querySelectorAll('.card.locked').forEach(card => {
             card.classList.remove('locked');
             card.style.opacity = '1';
             card.style.border = '1px solid #00ff73';
+            card.style.cursor = 'pointer';
         });
-        alert('✅ Access Granted! You can now open all sections.');
     }
 
     window.showSystemStart = function() {
@@ -461,4 +487,4 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="player" style="display:none;"></div>
 
 </body>
-    </html>
+</html>
