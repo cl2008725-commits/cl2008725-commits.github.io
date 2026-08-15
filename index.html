@@ -133,6 +133,43 @@ body::before {
     pointer-events: none;
 }
 
+  .<script>
+// Site Load වෙන ගමන් Welcome Voice
+window.addEventListener('load', () => {
+    // තත්පර 2ක් wait කරලා play කරනවා. effects load වෙන්න
+    setTimeout(() => {
+        speakWelcome();
+    }, 2000);
+});
+
+function speakWelcome() {
+    // Browser එකේ තියෙන Voice එක use කරනවා
+    const speech = new SpeechSynthesisUtterance();
+    
+    speech.text = "Welcome to Cyber Chamiya. Welcome to the Hacking Squad";
+    speech.lang = "en-US"; // "en-US" = English, "si-LK" = Sinhala
+    speech.rate = 1; // 0.5 = slow, 1 = normal, 2 = fast
+    speech.pitch = 1.2; // 1 = normal, 2 = robot voice
+    speech.volume = 1; // 0 to 1
+
+    // Cyber sound effect එකක් එක්ක
+    playBeep();
+
+    window.speechSynthesis.speak(speech);
+}
+
+function playBeep() {
+    // පොඩි cyber beep sound එකක්
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    oscillator.type = 'square';
+    oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+    oscillator.connect(audioContext.destination);
+    oscillator.start();
+    oscillator.stop(audioContext.currentTime + 0.1);
+}
+</script>
+    
 .flash-screen {
     position: fixed;
     top:0; left:0;
