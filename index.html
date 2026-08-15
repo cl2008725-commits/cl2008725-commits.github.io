@@ -12,11 +12,30 @@
 
 body {
     font-family: 'Rajdhani', sans-serif;
-    background: #000010; /* ටිකක් dark කරා */
+    background: #000010;
     color: white;
     min-height: 100vh;
     overflow-x: hidden;
     position: relative;
+}
+
+/* පිටිපස්සේ ලොකු රෝස හදවත */
+.heart-bg {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 40vw;
+    color: rgba(255, 0, 168, 0.08);
+    z-index: 0;
+    pointer-events: none;
+    animation: pulseHeart 4s ease-in-out infinite;
+    filter: blur(10px);
+}
+
+@keyframes pulseHeart {
+    0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.05; }
+    50% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.15; }
 }
 
 /* Neon Grid */
@@ -25,12 +44,12 @@ body::before {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: 
+    background:
         linear-gradient(rgba(0, 234, 255, 0.25) 3px, transparent 3px),
         linear-gradient(90deg, rgba(255, 0, 168, 0.25) 3px, transparent 3px);
     background-size: 100px 100px;
     animation: moveGrid 10s linear infinite;
-    z-index: 0;
+    z-index: 1;
     filter: drop-shadow(0 0 20px #00eaff);
 }
 
@@ -54,34 +73,33 @@ body::before {
     100% { transform: translateX(120vw); }
 }
 
-/* වැස්ස */
-.rain {
+/* හදවත් වැස්ස */
+.heart-rain {
     position: fixed;
-    width: 2px;
-    height: 20px;
-    background: linear-gradient(to bottom, transparent, #00eaff, white);
-    opacity: 0.7;
+    font-size: 20px;
     z-index: 3;
-    animation: fallRain linear infinite;
+    pointer-events: none;
+    animation: fallHeart linear forwards;
+    filter: drop-shadow(0 0 8px currentColor);
 }
 
-@keyframes fallRain {
-    0% { transform: translateY(-100px); }
-    100% { transform: translateY(110vh); }
+@keyframes fallHeart {
+    0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
 }
 
 /* අකුණු */
 .lightning {
     position: fixed;
-    width: 5px;
-    background: linear-gradient(to bottom, transparent, #ffff00 30%, white 50%, #ffff00 70%, transparent);
-    box-shadow: 0 0 40px #ffff00, 0 0 80px white;
+    width: 6px;
+    background: linear-gradient(to bottom, transparent, #ffff00 20%, white 40%, #ffff00 60%, white 80%, transparent);
+    box-shadow: 0 0 50px #ffff00, 0 0 100px white;
     opacity: 0;
     z-index: 9999;
     pointer-events: none;
 }
 
-/* Screen Flash when lightning */
+/* Screen Flash */
 .flash-screen {
     position: fixed;
     top:0; left:0;
@@ -90,6 +108,7 @@ body::before {
     opacity: 0;
     z-index: 9998;
     pointer-events: none;
+    transition: opacity 0.05s;
 }
 
 .lk-flag {
@@ -143,7 +162,7 @@ body::before {
     animation: glitch 2s infinite;
 }
 
-.glitch::before, .glitch::after {
+.glitch::before,.glitch::after {
     content: 'CHAMOD OFFICIAL';
     position: absolute;
     top: 0; left: 0;
@@ -304,14 +323,15 @@ footer {
 }
 
 @media(max-width: 500px) {
-    .glitch { font-size: 30px; }
-    .menu { grid-template-columns: 1fr; }
+   .glitch { font-size: 30px; }
+   .menu { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 
 <body>
 
+<div class="heart-bg">❤️</div>
 <div class="flash-screen" id="flash"></div>
 <div class="lk-flag"><img src="https://flagcdn.com/w320/lk.png" style="width:100%; height:100%; border-radius:3px;"></div>
 <div id="systemPopup" class="system-popup">⚡ SYSTEM START ⚡</div>
@@ -367,47 +387,58 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => cloud.remove(), 60000);
     }
     setInterval(createCloud, 4000);
-    for(let i=0; i<3; i++) createCloud(); // පටන් ගන්න ගමන් 3ක්
+    for(let i=0; i<3; i++) createCloud();
 
-    // වැස්ස
-    function createRain() {
-        const rain = document.createElement('div');
-        rain.className = 'rain';
-        rain.style.left = Math.random() * 100 + 'vw';
-        rain.style.animationDuration = Math.random() * 0.4 + 0.4 + 's';
-        document.body.appendChild(rain);
-        setTimeout(() => rain.remove(), 1200);
+    // හදවත් වැස්ස 🩷❤️🧡💛💚🩵
+    function createHeartRain() {
+        const hearts = ['🩷','❤️','🧡','💛','💚','🩵'];
+        const colors = ['#ff69b4','#ff0000','#ffa500','#ffff00','#00ff00','#00ffff'];
+
+        const heart = document.createElement('div');
+        heart.className = 'heart-rain';
+
+        const randomIndex = Math.floor(Math.random() * hearts.length);
+        heart.innerText = hearts[randomIndex];
+        heart.style.color = colors[randomIndex];
+
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.fontSize = Math.random() * 10 + 15 + 'px';
+        heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 5000);
     }
-    setInterval(createRain, 40); // ගොඩක් වැස්ස
+    setInterval(createHeartRain, 120); // වේගවත් වැස්ස
 
-    // අකුණු + Screen Flash
-    function createLightning() {
+    // CHAIN LIGHTNING
+    function lightningStrike() {
         const flash = document.getElementById('flash');
-        flash.style.opacity = '0.8';
-        setTimeout(() => flash.style.opacity = '0', 100);
+        flash.style.opacity = '0.9';
+        setTimeout(() => flash.style.opacity = '0', 80);
 
-        for(let i = 0; i < Math.floor(Math.random() * 4) + 3; i++) {
+        const boltCount = Math.floor(Math.random() * 4) + 4;
+        for(let i = 0; i < boltCount; i++) {
             setTimeout(() => {
                 const bolt = document.createElement('div');
                 bolt.className = 'lightning';
                 bolt.style.left = Math.random() * 100 + 'vw';
                 bolt.style.top = '0';
-                bolt.style.height = Math.random() * 500 + 400 + 'px';
-                bolt.style.background = Math.random() > 0.5 ? 
-                    'linear-gradient(to bottom, transparent, #ffff00 30%, white 50%, #ffff00 70%, transparent)' :
-                    'linear-gradient(to bottom, transparent, white 30%, #ffff00 50%, white 70%, transparent)';
-                
+                bolt.style.height = Math.random() * 600 + 400 + 'px';
+                bolt.style.background = Math.random() > 0.5?
+                    'linear-gradient(to bottom, transparent, #ffff00 20%, white 40%, #ffff00 60%, white 80%, transparent)' :
+                    'linear-gradient(to bottom, transparent, white 20%, #ffff00 40%, white 60%, #ffff00 80%, transparent)';
+
                 document.body.appendChild(bolt);
-                
+
                 bolt.animate([
                     {opacity: 0}, {opacity: 1}, {opacity: 0}
-                ], {duration: 300});
-                
-                setTimeout(() => bolt.remove(), 300);
-            }, i * 150);
+                ], {duration: 200});
+
+                setTimeout(() => bolt.remove(), 200);
+            }, i * 100);
         }
     }
-    setInterval(createLightning, Math.random() * 5000 + 4000);
+    setInterval(lightningStrike, Math.random() * 3000 + 2000);
 
     window.showSystemStart = function() {
         const popup = document.getElementById('systemPopup');
@@ -435,7 +466,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 player.playVideo();
                 btn.innerHTML = "⏸️ PAUSE";
             }
-            isPlaying = !isPlaying;
+            isPlaying =!isPlaying;
         }
     }
 });
@@ -443,4 +474,4 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="player" style="display:none;"></div>
 
 </body>
-    </html>
+        </html>
