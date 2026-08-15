@@ -4,110 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chamod OFFICIAL</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
-
-<style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: 'Rajdhani', sans-serif; background: #000010; color: white; min-height: 100vh; overflow-x: hidden; }
-
-/* වටේ කැරකෙන බල්බ් (Neon Bulbs) */
-.bulb {
-    position: fixed;
-    width: 10px; height: 10px;
-    background: #00eaff;
-    border-radius: 50%;
-    box-shadow: 0 0 15px #00eaff;
-    z-index: 1000;
-    animation: rotateBulbs 10s linear infinite;
-}
-
-@keyframes rotateBulbs {
-    0% { transform: rotate(0deg) translateX(105vw) rotate(0deg); }
-    100% { transform: rotate(360deg) translateX(105vw) rotate(-360deg); }
-}
-
-/* ඉමොජි වැස්ස */
-.emoji-rain {
-    position: fixed; top: -50px; font-size: 24px; z-index: 5;
-    pointer-events: none; animation: fallEmoji linear forwards;
-}
-@keyframes fallEmoji { 100% { transform: translateY(110vh) rotate(360deg); } }
-
-/* WhatsApp Button & Label */
-.wa-container { position: fixed; bottom: 80px; right: 20px; display: flex; flex-direction: column; align-items: center; z-index: 10003; }
-.contact-label { font-size: 12px; font-weight: bold; color: #25D366; margin-bottom: 5px; text-transform: uppercase; letter-spacing: 1px; }
-.whatsapp-btn { width: 60px; height: 60px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; color: white; box-shadow: 0 0 20px rgba(37, 211, 102, 0.6); animation: pulse 2s infinite; }
-@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-
-/* ඉතිරි පරණ ස්ටයිල්ස් මෙතනට එයි */
-.glitch { font-family: 'Orbitron', sans-serif; font-size: 45px; font-weight: 900; text-transform: uppercase; color: #fff; margin-top: 20px; }
-.container { width: 90%; max-width: 800px; margin: auto; text-align: center; padding-top: 50px; }
-.anime-fighter { width: 150px; height: 150px; border-radius: 20px; border: 3px solid #00eaff; box-shadow: 0 0 20px #00eaff; }
-.menu { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
-.card { padding: 20px; background: rgba(255,255,255,0.05); border: 1px solid #00eaff; border-radius: 15px; cursor: pointer; }
-.music-btn { position: fixed; bottom: 20px; right: 20px; padding: 10px 20px; background: #000; border: 2px solid #00eaff; color: white; cursor: pointer; }
-</style>
-</head>
-
-<body>
-
-<!-- කැරකෙන බල්බ් -->
-<div class="bulb" style="animation-delay: 0s;"></div>
-<div class="bulb" style="animation-delay: 2s; background: #ff00a8;"></div>
-<div class="bulb" style="animation-delay: 4s; background: #ffff00;"></div>
-
-<!-- WhatsApp -->
-<div class="wa-container">
-    <div class="contact-label">CONTACT ME</div>
-    <a href="https://wa.me/94703247462" target="_blank" class="whatsapp-btn">💬</a>
-</div>
-
-<div class="container">
-    <img src="https://i.gifer.com/7efs.gif" class="anime-fighter">
-    <h1 class="glitch">CHAMOD OFFICIAL</h1>
-    
-    <div class="menu">
-        <div class="card"><h3>ABOUT</h3></div>
-        <div class="card"><h3>PROJECTS</h3></div>
-    </div>
-</div>
-
-<button class="music-btn" onclick="toggleMusic()" id="musicToggle">🎵 PLAY</button>
-<div id="player" style="display:none;"></div>
-
-<script src="https://www.youtube.com/iframe_api"></script>
-<script>
-    // ඉමොජි වැස්ස
-    function createEmoji() {
-        const emojis = ['🔥', '✨', '⚡', '🌸', '💫', '💎'];
-        const e = document.createElement('div');
-        e.className = 'emoji-rain';
-        e.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-        e.style.left = Math.random() * 100 + 'vw';
-        e.style.animationDuration = Math.random() * 3 + 3 + 's';
-        document.body.appendChild(e);
-        setTimeout(() => e.remove(), 6000);
-    }
-    setInterval(createEmoji, 500);
-
-    // Music
-    var player;
-    function onYouTubeIframeAPIReady() {
-        player = new YT.Player('player', { videoId: 'QKY9jEIXfVQ', playerVars: { 'loop': 1, 'playlist': 'QKY9jEIXfVQ' }});
-    }
-    function toggleMusic() {
-        if(player.getPlayerState() == 1) { player.pauseVideo(); document.getElementById('musicToggle').innerText="🎵 PLAY"; }
-        else { player.playVideo(); document.getElementById('musicToggle').innerText="⏸️ PAUSE"; }
-    }
-</script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chamod OFFICIAL</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
 
@@ -162,6 +58,23 @@ body::before {
     100% { transform: translate(100px, 100px); }
 }
 
+/* වටේ කැරකෙන බල්බ් */
+.bulb {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: #00eaff;
+    border-radius: 50%;
+    box-shadow: 0 0 20px #00eaff;
+    z-index: 1000;
+    animation: rotateBulbs 12s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes rotateBulbs {
+    0% { transform: rotate(0deg) translateX(110vw) rotate(0deg); }
+    100% { transform: rotate(360deg) translateX(110vw) rotate(-360deg); }
+}
+
 /* වලාකුලු */
 .cloud {
     position: fixed;
@@ -214,11 +127,27 @@ body::before {
     transition: opacity 0.05s;
 }
 
-/* WhatsApp Floating Button */
-.whatsapp-btn {
+/* WhatsApp Button & Label */
+.wa-container {
     position: fixed;
     bottom: 80px;
     right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 10003;
+}
+.contact-label {
+    font-size: 12px;
+    font-weight: 900;
+    color: #25D366;
+    margin-bottom: 5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: 'Orbitron', sans-serif;
+    text-shadow: 0 0 10px #25D366;
+}
+.whatsapp-btn {
     width: 60px;
     height: 60px;
     background: #25D366;
@@ -229,7 +158,6 @@ body::before {
     font-size: 35px;
     color: white;
     text-decoration: none;
-    z-index: 10003;
     box-shadow: 0 0 20px rgba(37, 211, 102, 0.6);
     animation: whatsappPulse 2s infinite;
     transition: 0.3s;
@@ -241,8 +169,8 @@ body::before {
 }
 
 @keyframes whatsappPulse {
-    0%, 100% { box-shadow: 0 0 20px rgba(37, 211, 102, 0.6); }
-    50% { box-shadow: 0 0 40px rgba(37, 211, 102, 1); }
+    0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(37, 211, 102, 0.6); }
+    50% { transform: scale(1.1); box-shadow: 0 0 40px rgba(37, 211, 102, 1); }
 }
 
 .lk-flag { position: fixed; top: 20px; right: 20px; width: 70px; height: 45px; z-index: 10001; border: 2px solid #00eaff; border-radius: 5px; box-shadow: 0 0 25px rgba(0, 234, 255, 0.8); animation: floatFlag 3s ease-in-out infinite; }
@@ -289,8 +217,17 @@ footer { text-align: center; padding: 50px 10px 80px; color: #888; font-weight: 
 <div class="heart-bg">❤️</div>
 <div class="flash-screen" id="flash"></div>
 
-<!-- WhatsApp Button -->
-<a href="https://wa.me/94703247462" target="_blank" class="whatsapp-btn">💬</a>
+<!-- වටේ කැරකෙන බල්බ් -->
+<div class="bulb" style="animation-delay: 0s;"></div>
+<div class="bulb" style="animation-delay: 3s; background: #ff00a8; box-shadow: 0 0 20px #ff00a8;"></div>
+<div class="bulb" style="animation-delay: 6s; background: #ffff00; box-shadow: 0 0 20px #ffff00;"></div>
+<div class="bulb" style="animation-delay: 9s; background: #00ff73; box-shadow: 0 0 20px #00ff73;"></div>
+
+<!-- WhatsApp Button with Label -->
+<div class="wa-container">
+    <div class="contact-label">CONTACT ME</div>
+    <a href="https://wa.me/94703247462" target="_blank" class="whatsapp-btn">💬</a>
+</div>
 
 <div class="lk-flag"><img src="https://flagcdn.com/w320/lk.png" style="width:100%; height:100%; border-radius:3px;"></div>
 <div id="systemPopup" class="system-popup">⚡ SYSTEM START ⚡</div>
@@ -331,7 +268,6 @@ footer { text-align: center; padding: 50px 10px 80px; color: #888; font-weight: 
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    console.log("Site Loaded");
 
     // වලාකුලු
     function createCloud() {
@@ -349,26 +285,23 @@ document.addEventListener('DOMContentLoaded', function() {
     setInterval(createCloud, 4000);
     for(let i=0; i<3; i++) createCloud();
 
-    // 🩷❤️🧡💛💚🩵 හදවත් වැස්ස - FIXED
+    // 🩷❤️🧡💛💚🩵 හදවත් වැස්ස
     const hearts = ['🩷','❤️','🧡','💛','💚','🩵'];
     const colors = ['#ff69b4','#ff0000','#ffa500','#ffff00','#00ff00','#00ffff'];
 
     function createHeartRain() {
         const heart = document.createElement('div');
         heart.className = 'heart-rain';
-
         const randomIndex = Math.floor(Math.random() * hearts.length);
         heart.innerText = hearts[randomIndex];
         heart.style.color = colors[randomIndex];
-
         heart.style.left = Math.random() * 100 + 'vw';
         heart.style.fontSize = Math.random() * 12 + 18 + 'px';
         heart.style.animationDuration = Math.random() * 2 + 3 + 's';
-
         document.body.appendChild(heart);
         setTimeout(() => heart.remove(), 5000);
     }
-    setInterval(createHeartRain, 100); // 100ms = වේගවත් වැස්ස
+    setInterval(createHeartRain, 100);
 
     // CHAIN LIGHTNING
     function lightningStrike() {
@@ -389,11 +322,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     'linear-gradient(to bottom, transparent, white 20%, #ffff00 40%, white 60%, #ffff00 80%, transparent)';
 
                 document.body.appendChild(bolt);
-
-                bolt.animate([
-                    {opacity: 0}, {opacity: 1}, {opacity: 0}
-                ], {duration: 200});
-
+                bolt.animate([{opacity: 0}, {opacity: 1}, {opacity: 0}], {duration: 200});
                 setTimeout(() => bolt.remove(), 200);
             }, i * 100);
         }
@@ -434,4 +363,4 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="player" style="display:none;"></div>
 
 </body>
-</html>
+    </html>
