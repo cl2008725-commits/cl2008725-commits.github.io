@@ -153,6 +153,7 @@ body::before {
     flex-direction: column;
     align-items: center;
     z-index: 10003;
+    gap: 10px;
 }
 .contact-label {
     font-size: 12px;
@@ -190,6 +191,21 @@ body::before {
     50% { transform: scale(1.1); box-shadow: 0 0 40px rgba(37, 211, 102, 1); }
 }
 
+.yt-join-btn {
+    background: #ff0000;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 900;
+    font-family: 'Orbitron', sans-serif;
+    text-decoration: none;
+    text-align: center;
+    box-shadow: 0 0 15px rgba(255,0,0,0.6);
+    transition: 0.3s;
+}
+.yt-join-btn:hover { transform: scale(1.05); box-shadow: 0 0 25px rgba(255,0,0,1); }
+
 /* Security Popup */
 .security-popup {
     position: fixed;
@@ -206,33 +222,9 @@ body::before {
     max-width: 380px;
 }
 .security-popup.show { transform: translate(-50%, -50%) scale(1); }
-.security-popup h3 { color: #ff0000; font-family: 'Orbitron', sans-serif; margin-bottom: 15px; font-size: 22px; }
-.security-popup p { margin-bottom: 15px; color: #ccc; }
-.security-popup.yt-btn {
-    display: block;
-    margin: 10px auto;
-    padding: 12px 25px;
-    background: #ff0000;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: 900;
-    font-family: 'Orbitron', sans-serif;
-    width: 80%;
-}
-.security-popup.check-btn {
-    display: block;
-    margin: 10px auto;
-    padding: 12px 25px;
-    background: #00ff73;
-    color: black;
-    border: none;
-    border-radius: 8px;
-    font-weight: 900;
-    font-family: 'Orbitron', sans-serif;
-    width: 80%;
-    cursor: pointer;
-}
+.security-popup h3 { color: #ff0000; font-family: 'Orbitron', sans-serif; margin-bottom: 15px; }
+.security-popup p { color: #ccc; margin-bottom: 10px; }
+.security-popup.req-list { text-align: left; margin: 15px 0; color: #ff00a8; }
 
 .lk-flag { position: fixed; top: 20px; right: 20px; width: 70px; height: 45px; z-index: 10001; border: 2px solid #00eaff; border-radius: 5px; box-shadow: 0 0 25px rgba(0, 234, 255, 0.8); animation: floatFlag 3s ease-in-out infinite; }
 @keyframes floatFlag { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
@@ -257,6 +249,7 @@ header { text-align: center; padding: 40px 20px; }
 .card { padding: 30px 15px; border-radius: 20px; text-align: center; background: rgba(0, 234, 255, 0.05); border: 1px solid rgba(0, 234, 255, 0.3); backdrop-filter: blur(20px); transition: all 0.4s ease; cursor: pointer; font-weight: 700; }
 .card:hover { transform: translateY(-10px); background: rgba(255, 0, 168, 0.1); border: 1px solid #ff00a8; box-shadow: 0 10px 40px rgba(255, 0, 168, 0.4); }
 .card.locked { opacity: 0.5; border: 1px solid #ff0000; cursor: not-allowed; }
+.card.completed { border: 1px solid #00ff73; }
 .icon { font-size: 45px; margin-bottom: 15px; }
 .card h3 { font-size: 22px; margin-bottom: 5px; color: #fff; font-family: 'Orbitron', sans-serif; }
 .contact-num { color: #00eaff; text-decoration: none; font-weight: bold; font-size: 18px; }
@@ -279,12 +272,15 @@ footer { text-align: center; padding: 50px 10px 80px; color: #888; font-weight: 
 <div class="heart-bg">❤️</div>
 <div class="flash-screen" id="flash"></div>
 
-<!-- Security Popup - FIXED -->
+<!-- Security Popup -->
 <div class="security-popup" id="securityPopup">
     <h3>🔒 ACCESS LOCKED</h3>
-    <p>Subscribe to our YouTube Channel to unlock GAMING PANELS & FILES!</p>
-    <a href="https://youtube.com/@chamodlakshan-p8j1g?si=3Aai7hbIRcLEJuZr" target="_blank" class="yt-btn">🔴 SUBSCRIBE NOW</a>
-    <button onclick="checkSubscription()" class="check-btn">✅ I SUBSCRIBED - CHECK</button>
+    <p>Complete both steps below to unlock:</p>
+    <div class="req-list" id="reqList">
+        ❌ Join WhatsApp Channel<br>
+        ❌ Subscribe YouTube Channel
+    </div>
+    <p style="font-size:12px; color:#aaa;">After completing both, click any locked card again</p>
 </div>
 
 <!-- වටේ කැරකෙන බල්බ් -->
@@ -293,10 +289,11 @@ footer { text-align: center; padding: 50px 10px 80px; color: #888; font-weight: 
 <div class="bulb" style="animation-delay: 6s; background: #ffff00; box-shadow: 0 0 20px #ffff00;"></div>
 <div class="bulb" style="animation-delay: 9s; background: #00ff73; box-shadow: 0 0 20px #00ff73;"></div>
 
-<!-- WhatsApp Button with Label -->
+<!-- WhatsApp Button with Label + YT Button -->
 <div class="wa-container">
     <div class="contact-label">CONTACT ME</div>
     <a href="https://wa.me/94703247462" target="_blank" class="whatsapp-btn">💬</a>
+    <a href="https://youtube.com/@chamodlakshan-p8j1g?si=3Aai7hbIRcLEJuZr" target="_blank" class="yt-join-btn" onclick="markYT()">JOIN OUR YT CHANNEL</a>
 </div>
 
 <div class="lk-flag"><img src="https://flagcdn.com/w320/lk.png" style="width:100%; height:100%; border-radius:3px;"></div>
@@ -311,7 +308,7 @@ footer { text-align: center; padding: 50px 10px 80px; color: #888; font-weight: 
 </header>
 
 <div class="menu">
-    <div class="card" onclick="openChannel()"><div class="icon">📢</div><h3>JOIN UPDATES CHANNEL</h3><p style="color:#25D366;">💬 WhatsApp Channel</p></div>
+    <div class="card" id="waCard" onclick="openChannel()"><div class="icon">📢</div><h3>JOIN UPDATES CHANNEL</h3><p style="color:#25D366;">💬 WhatsApp Channel</p></div>
     <div class="card locked" id="gamingCard" onclick="checkAccess('gaming')"><div class="icon">🎮</div><h3>GAMING PANNELS UPDATES</h3><p style="color:#aaa;">PANELS & MODS</p></div>
     <div class="card locked" id="filesCard" onclick="checkAccess('files')"><div class="icon">📁</div><h3>FILES</h3><p style="color:#aaa;">DOWNLOADS</p></div>
     <div class="card"><div class="icon">📞</div><h3>CONTACT</h3><a href="tel:+94703247462" class="contact-num">+94 70 324 7462</a></div>
@@ -339,10 +336,8 @@ footer { text-align: center; padding: 50px 10px 80px; color: #888; font-weight: 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
 
-    // Page load වෙනකොටම subscribe කරාද බලනවා
-    if(localStorage.getItem('subscribed') === 'true') {
-        unlockCards();
-    }
+    // Load වෙනකොට check කරනවා
+    updateUI();
 
     // පොඩි පාට පාට පාවෙන බෝල 20
     const particleColors = ['#00eaff', '#ff00a8', '#ffff00', '#00ff73', '#7b00ff'];
@@ -420,37 +415,56 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     setInterval(lightningStrike, Math.random() * 3000 + 2000);
 
-    // Security System - FIXED
+    // Dual Lock System
     window.openChannel = function() {
+        localStorage.setItem('joinedWA', 'true');
         window.open('https://whatsapp.com/channel/0029VbDYvhGDeON7DqDxnw0i', '_blank');
+        updateUI();
+    }
+
+    window.markYT = function() {
+        localStorage.setItem('subscribedYT', 'true');
+        updateUI();
+    }
+
+    function updateUI() {
+        const joinedWA = localStorage.getItem('joinedWA') === 'true';
+        const subscribedYT = localStorage.getItem('subscribedYT') === 'true';
+
+        // WA Card mark
+        if(joinedWA) document.getElementById('waCard').classList.add('completed');
+
+        // Popup requirements update
+        document.getElementById('reqList').innerHTML =
+            (joinedWA? '✅' : '❌') + ' Join WhatsApp Channel<br>' +
+            (subscribedYT? '✅' : '❌') + ' Subscribe YouTube Channel';
+
+        // Both done nam unlock
+        if(joinedWA && subscribedYT) {
+            document.querySelectorAll('.card.locked').forEach(card => {
+                card.classList.remove('locked');
+                card.style.opacity = '1';
+                card.style.border = '1px solid #00ff73';
+                card.style.cursor = 'pointer';
+            });
+        }
     }
 
     window.checkAccess = function(type) {
-        if(localStorage.getItem('subscribed') === 'true') {
+        const joinedWA = localStorage.getItem('joinedWA') === 'true';
+        const subscribedYT = localStorage.getItem('subscribedYT') === 'true';
+
+        if(joinedWA && subscribedYT) {
             showSystemStart();
             setTimeout(() => {
                 alert(type === 'gaming'? '🎮 Opening GAMING PANNELS...' : '📁 Opening FILES...');
             }, 500);
         } else {
             document.getElementById('securityPopup').classList.add('show');
+            setTimeout(() => {
+                document.getElementById('securityPopup').classList.remove('show');
+            }, 3000);
         }
-    }
-
-    window.checkSubscription = function() {
-        // User YouTube ගිහින් ආවට පස්සේ මේක click කරනවා
-        localStorage.setItem('subscribed', 'true');
-        document.getElementById('securityPopup').classList.remove('show');
-        unlockCards();
-        alert('✅ ACCESS GRANTED!\n\nNow you can access GAMING PANELS & FILES');
-    }
-
-    function unlockCards() {
-        document.querySelectorAll('.card.locked').forEach(card => {
-            card.classList.remove('locked');
-            card.style.opacity = '1';
-            card.style.border = '1px solid #00ff73';
-            card.style.cursor = 'pointer';
-        });
     }
 
     window.showSystemStart = function() {
