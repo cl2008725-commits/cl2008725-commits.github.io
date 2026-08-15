@@ -5,15 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Chamod OFFICIAL</title>
 
-<!-- Cyber Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
 
 <style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
     font-family: 'Rajdhani', sans-serif;
@@ -24,7 +19,7 @@ body {
     position: relative;
 }
 
-/* Particle Background + Neon Grid */
+/* Neon Grid */
 body::before {
     content: '';
     position: fixed;
@@ -33,7 +28,7 @@ body::before {
     background: 
         linear-gradient(rgba(0, 234, 255, 0.2) 3px, transparent 3px),
         linear-gradient(90deg, rgba(255, 0, 168, 0.2) 3px, transparent 3px);
-    background-size: 100px 100px; /* ලොකු කරා */
+    background-size: 100px 100px;
     animation: moveGrid 10s linear infinite;
     z-index: 1;
     filter: drop-shadow(0 0 15px #00eaff);
@@ -42,6 +37,56 @@ body::before {
 @keyframes moveGrid {
     0% { transform: translate(0, 0); }
     100% { transform: translate(100px, 100px); }
+}
+
+/* වලාකුලු */
+.cloud {
+    position: fixed;
+    top: -100px;
+    background: rgba(50, 50, 80, 0.4);
+    border-radius: 100px;
+    filter: blur(20px);
+    z-index: 2;
+    animation: floatCloud linear infinite;
+}
+
+.cloud::before, .cloud::after {
+    content: '';
+    position: absolute;
+    background: rgba(50, 50, 80, 0.4);
+    border-radius: 100px;
+}
+
+@keyframes floatCloud {
+    0% { transform: translateX(-200px); }
+    100% { transform: translateX(120vw); }
+}
+
+/* වැස්ස */
+.rain {
+    position: fixed;
+    width: 2px;
+    height: 15px;
+    background: linear-gradient(to bottom, transparent, #00eaff);
+    opacity: 0.6;
+    z-index: 3;
+    animation: fallRain linear infinite;
+}
+
+@keyframes fallRain {
+    0% { transform: translateY(-100px); }
+    100% { transform: translateY(110vh); }
+}
+
+/* අකුණු */
+.lightning {
+    position: fixed;
+    width: 4px;
+    background: linear-gradient(to bottom, transparent, #ffff00, white, transparent);
+    box-shadow: 0 0 30px #ffff00, 0 0 60px white;
+    opacity: 0;
+    z-index: 9999;
+    pointer-events: none;
 }
 
 /* ලංකා කොඩිය */
@@ -63,19 +108,7 @@ body::before {
     50% { transform: translateY(-10px); }
 }
 
-/* අකුණු System - ගොඩක් එනවා */
-.lightning {
-    position: fixed;
-    width: 4px;
-    height: 100vh;
-    background: linear-gradient(to bottom, transparent, #ffff00, white, transparent);
-    box-shadow: 0 0 30px #ffff00, 0 0 60px white;
-    opacity: 0;
-    z-index: 9999;
-    pointer-events: none;
-}
-
-/* System Start Popup */
+/* System Popup */
 .system-popup {
     position: fixed;
     top: 50%;
@@ -98,7 +131,7 @@ body::before {
     transform: translate(-50%, -50%) scale(1);
 }
 
-/* Glitch Title Animation */
+/* Glitch Title */
 .glitch {
     font-family: 'Orbitron', sans-serif;
     font-size: 45px;
@@ -135,40 +168,21 @@ body::before {
 }
 
 @keyframes glitch-1 {
-    0% { transform: translate(0); }
     20% { transform: translate(-3px, 3px); }
     40% { transform: translate(-3px, -3px); }
     60% { transform: translate(3px, 3px); }
     80% { transform: translate(3px, -3px); }
-    100% { transform: translate(0); }
 }
 
 @keyframes glitch-2 {
-    0% { transform: translate(0); }
     20% { transform: translate(3px, -3px); }
     40% { transform: translate(3px, 3px); }
     60% { transform: translate(-3px, -3px); }
     80% { transform: translate(-3px, 3px); }
-    100% { transform: translate(0); }
 }
 
-.subtitle {
-    margin-top: 10px;
-    color: #00eaff;
-    font-size: 18px;
-    letter-spacing: 2px;
-    font-weight: 700;
-}
-
-.container {
-    width: 92%;
-    max-width: 900px;
-    margin: auto;
-    position: relative;
-    z-index: 10;
-    padding-top: 40px;
-}
-
+.subtitle { margin-top: 10px; color: #00eaff; font-size: 18px; letter-spacing: 2px; font-weight: 700; }
+.container { width: 92%; max-width: 900px; margin: auto; position: relative; z-index: 10; padding-top: 40px; }
 header { text-align: center; padding: 40px 20px; }
 
 .anime-fighter {
@@ -188,13 +202,7 @@ header { text-align: center; padding: 40px 20px; }
     50% { transform: translateY(-20px); box-shadow: 0 0 80px #ff00a8; }
 }
 
-.menu {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-    margin-top: 30px;
-}
-
+.menu { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-top: 30px; }
 .card {
     padding: 30px 15px;
     border-radius: 20px;
@@ -249,12 +257,7 @@ section {
     text-align: center;
 }
 
-section h2 { 
-    margin-bottom: 15px; 
-    color: #ff00a8; 
-    font-family: 'Orbitron', sans-serif;
-    font-size: 24px;
-}
+section h2 { margin-bottom: 15px; color: #ff00a8; font-family: 'Orbitron', sans-serif; font-size: 24px; }
 
 .button {
     display: inline-block;
@@ -321,16 +324,12 @@ footer {
 <body>
 
 <div class="lk-flag"><img src="https://flagcdn.com/w320/lk.png" style="width:100%; height:100%; border-radius:3px;"></div>
-
 <div id="systemPopup" class="system-popup">⚡ SYSTEM START ⚡</div>
-
 <button class="music-btn" onclick="toggleMusic()" id="musicToggle">🎵 PLAY</button>
 
 <div class="container">
-
 <header>
 <img src="https://i.gifer.com/7efs.gif" alt="Anime Fighter" class="anime-fighter">
-
 <h1 class="glitch">CHAMOD OFFICIAL</h1>
 <p class="subtitle">WELCOME TO THE FUTURE OF WEB</p>
 </header>
@@ -358,34 +357,59 @@ footer {
     MADE WITH ❤️ IN SRI LANKA <br>
     <span class="team-text">TEAM OF CRASH OF DELTA</span>
 </footer>
-
 </div>
 
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
-    // Random Lightning - ගොඩක් එකපාර
+    // වලාකුලු හදන එක
+    function createCloud() {
+        const cloud = document.createElement('div');
+        cloud.className = 'cloud';
+        const size = Math.random() * 100 + 100;
+        cloud.style.width = size + 'px';
+        cloud.style.height = size/2 + 'px';
+        cloud.style.left = '-200px';
+        cloud.style.top = Math.random() * 200 + 'px';
+        cloud.style.animationDuration = Math.random() * 20 + 30 + 's';
+        document.body.appendChild(cloud);
+        setTimeout(() => cloud.remove(), 50000);
+    }
+    setInterval(createCloud, 5000);
+
+    // වැස්ස හදන එක
+    function createRain() {
+        const rain = document.createElement('div');
+        rain.className = 'rain';
+        rain.style.left = Math.random() * 100 + 'vw';
+        rain.style.animationDuration = Math.random() * 0.5 + 0.5 + 's';
+        document.body.appendChild(rain);
+        setTimeout(() => rain.remove(), 1000);
+    }
+    setInterval(createRain, 50);
+
+    // Random Lightning + වැස්සත් එක්ක
     function createLightning() {
-        for(let i = 0; i < Math.floor(Math.random() * 3) + 2; i++) {
+        for(let i = 0; i < Math.floor(Math.random() * 4) + 2; i++) {
             setTimeout(() => {
                 const bolt = document.createElement('div');
                 bolt.className = 'lightning';
                 bolt.style.left = Math.random() * 100 + 'vw';
+                bolt.style.height = Math.random() * 400 + 300 + 'px';
                 bolt.style.background = Math.random() > 0.5 ? 
                     'linear-gradient(to bottom, transparent, #ffff00, white, transparent)' :
                     'linear-gradient(to bottom, transparent, white, #ffff00, transparent)';
-                bolt.style.height = Math.random() * 300 + 400 + 'px';
                 
                 document.body.appendChild(bolt);
                 
                 bolt.animate([
                     {opacity: 0}, {opacity: 1}, {opacity: 0}
-                ], {duration: 200});
+                ], {duration: 250});
                 
-                setTimeout(() => bolt.remove(), 200);
-            }, i * 100);
+                setTimeout(() => bolt.remove(), 250);
+            }, i * 120);
         }
     }
-    setInterval(createLightning, Math.random() * 3000 + 2000);
+    setInterval(createLightning, Math.random() * 4000 + 3000);
 
     function showSystemStart() {
         const popup = document.getElementById('systemPopup');
@@ -420,4 +444,4 @@ footer {
 <div id="player" style="display:none;"></div>
 
 </body>
-</html>
+                                                                   </html>
