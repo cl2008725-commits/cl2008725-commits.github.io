@@ -12,7 +12,7 @@
 
 body {
     font-family: 'Rajdhani', sans-serif;
-    background: #000;
+    background: #000010; /* ටිකක් dark කරා */
     color: white;
     min-height: 100vh;
     overflow-x: hidden;
@@ -26,12 +26,12 @@ body::before {
     top: 0; left: 0;
     width: 100%; height: 100%;
     background: 
-        linear-gradient(rgba(0, 234, 255, 0.2) 3px, transparent 3px),
-        linear-gradient(90deg, rgba(255, 0, 168, 0.2) 3px, transparent 3px);
+        linear-gradient(rgba(0, 234, 255, 0.25) 3px, transparent 3px),
+        linear-gradient(90deg, rgba(255, 0, 168, 0.25) 3px, transparent 3px);
     background-size: 100px 100px;
     animation: moveGrid 10s linear infinite;
-    z-index: 1;
-    filter: drop-shadow(0 0 15px #00eaff);
+    z-index: 0;
+    filter: drop-shadow(0 0 20px #00eaff);
 }
 
 @keyframes moveGrid {
@@ -42,23 +42,15 @@ body::before {
 /* වලාකුලු */
 .cloud {
     position: fixed;
-    top: -100px;
-    background: rgba(50, 50, 80, 0.4);
+    background: rgba(80, 80, 120, 0.5);
     border-radius: 100px;
-    filter: blur(20px);
+    filter: blur(25px);
     z-index: 2;
     animation: floatCloud linear infinite;
 }
 
-.cloud::before, .cloud::after {
-    content: '';
-    position: absolute;
-    background: rgba(50, 50, 80, 0.4);
-    border-radius: 100px;
-}
-
 @keyframes floatCloud {
-    0% { transform: translateX(-200px); }
+    0% { transform: translateX(-300px); }
     100% { transform: translateX(120vw); }
 }
 
@@ -66,9 +58,9 @@ body::before {
 .rain {
     position: fixed;
     width: 2px;
-    height: 15px;
-    background: linear-gradient(to bottom, transparent, #00eaff);
-    opacity: 0.6;
+    height: 20px;
+    background: linear-gradient(to bottom, transparent, #00eaff, white);
+    opacity: 0.7;
     z-index: 3;
     animation: fallRain linear infinite;
 }
@@ -81,15 +73,25 @@ body::before {
 /* අකුණු */
 .lightning {
     position: fixed;
-    width: 4px;
-    background: linear-gradient(to bottom, transparent, #ffff00, white, transparent);
-    box-shadow: 0 0 30px #ffff00, 0 0 60px white;
+    width: 5px;
+    background: linear-gradient(to bottom, transparent, #ffff00 30%, white 50%, #ffff00 70%, transparent);
+    box-shadow: 0 0 40px #ffff00, 0 0 80px white;
     opacity: 0;
     z-index: 9999;
     pointer-events: none;
 }
 
-/* ලංකා කොඩිය */
+/* Screen Flash when lightning */
+.flash-screen {
+    position: fixed;
+    top:0; left:0;
+    width:100%; height:100%;
+    background: white;
+    opacity: 0;
+    z-index: 9998;
+    pointer-events: none;
+}
+
 .lk-flag {
     position: fixed;
     top: 20px;
@@ -108,7 +110,6 @@ body::before {
     50% { transform: translateY(-10px); }
 }
 
-/* System Popup */
 .system-popup {
     position: fixed;
     top: 50%;
@@ -131,7 +132,6 @@ body::before {
     transform: translate(-50%, -50%) scale(1);
 }
 
-/* Glitch Title */
 .glitch {
     font-family: 'Orbitron', sans-serif;
     font-size: 45px;
@@ -167,19 +167,8 @@ body::before {
     50% { text-shadow: 0 0 40px rgba(0, 234, 255, 0.5); }
 }
 
-@keyframes glitch-1 {
-    20% { transform: translate(-3px, 3px); }
-    40% { transform: translate(-3px, -3px); }
-    60% { transform: translate(3px, 3px); }
-    80% { transform: translate(3px, -3px); }
-}
-
-@keyframes glitch-2 {
-    20% { transform: translate(3px, -3px); }
-    40% { transform: translate(3px, 3px); }
-    60% { transform: translate(-3px, -3px); }
-    80% { transform: translate(-3px, 3px); }
-}
+@keyframes glitch-1 { 20% { transform: translate(-3px, 3px); } 40% { transform: translate(-3px, -3px); } 60% { transform: translate(3px, 3px); } 80% { transform: translate(3px, -3px); } }
+@keyframes glitch-2 { 20% { transform: translate(3px, -3px); } 40% { transform: translate(3px, 3px); } 60% { transform: translate(-3px, -3px); } 80% { transform: translate(-3px, 3px); } }
 
 .subtitle { margin-top: 10px; color: #00eaff; font-size: 18px; letter-spacing: 2px; font-weight: 700; }
 .container { width: 92%; max-width: 900px; margin: auto; position: relative; z-index: 10; padding-top: 40px; }
@@ -323,6 +312,7 @@ footer {
 
 <body>
 
+<div class="flash-screen" id="flash"></div>
 <div class="lk-flag"><img src="https://flagcdn.com/w320/lk.png" style="width:100%; height:100%; border-radius:3px;"></div>
 <div id="systemPopup" class="system-popup">⚡ SYSTEM START ⚡</div>
 <button class="music-btn" onclick="toggleMusic()" id="musicToggle">🎵 PLAY</button>
@@ -361,57 +351,65 @@ footer {
 
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
-    // වලාකුලු හදන එක
+document.addEventListener('DOMContentLoaded', function() {
+
+    // වලාකුලු
     function createCloud() {
         const cloud = document.createElement('div');
         cloud.className = 'cloud';
-        const size = Math.random() * 100 + 100;
+        const size = Math.random() * 120 + 120;
         cloud.style.width = size + 'px';
-        cloud.style.height = size/2 + 'px';
-        cloud.style.left = '-200px';
-        cloud.style.top = Math.random() * 200 + 'px';
-        cloud.style.animationDuration = Math.random() * 20 + 30 + 's';
+        cloud.style.height = size/2.5 + 'px';
+        cloud.style.left = '-300px';
+        cloud.style.top = Math.random() * 150 + 'px';
+        cloud.style.animationDuration = Math.random() * 25 + 35 + 's';
         document.body.appendChild(cloud);
-        setTimeout(() => cloud.remove(), 50000);
+        setTimeout(() => cloud.remove(), 60000);
     }
-    setInterval(createCloud, 5000);
+    setInterval(createCloud, 4000);
+    for(let i=0; i<3; i++) createCloud(); // පටන් ගන්න ගමන් 3ක්
 
-    // වැස්ස හදන එක
+    // වැස්ස
     function createRain() {
         const rain = document.createElement('div');
         rain.className = 'rain';
         rain.style.left = Math.random() * 100 + 'vw';
-        rain.style.animationDuration = Math.random() * 0.5 + 0.5 + 's';
+        rain.style.animationDuration = Math.random() * 0.4 + 0.4 + 's';
         document.body.appendChild(rain);
-        setTimeout(() => rain.remove(), 1000);
+        setTimeout(() => rain.remove(), 1200);
     }
-    setInterval(createRain, 50);
+    setInterval(createRain, 40); // ගොඩක් වැස්ස
 
-    // Random Lightning + වැස්සත් එක්ක
+    // අකුණු + Screen Flash
     function createLightning() {
-        for(let i = 0; i < Math.floor(Math.random() * 4) + 2; i++) {
+        const flash = document.getElementById('flash');
+        flash.style.opacity = '0.8';
+        setTimeout(() => flash.style.opacity = '0', 100);
+
+        for(let i = 0; i < Math.floor(Math.random() * 4) + 3; i++) {
             setTimeout(() => {
                 const bolt = document.createElement('div');
                 bolt.className = 'lightning';
                 bolt.style.left = Math.random() * 100 + 'vw';
-                bolt.style.height = Math.random() * 400 + 300 + 'px';
+                bolt.style.top = '0';
+                bolt.style.height = Math.random() * 500 + 400 + 'px';
                 bolt.style.background = Math.random() > 0.5 ? 
-                    'linear-gradient(to bottom, transparent, #ffff00, white, transparent)' :
-                    'linear-gradient(to bottom, transparent, white, #ffff00, transparent)';
+                    'linear-gradient(to bottom, transparent, #ffff00 30%, white 50%, #ffff00 70%, transparent)' :
+                    'linear-gradient(to bottom, transparent, white 30%, #ffff00 50%, white 70%, transparent)';
                 
                 document.body.appendChild(bolt);
                 
                 bolt.animate([
                     {opacity: 0}, {opacity: 1}, {opacity: 0}
-                ], {duration: 250});
+                ], {duration: 300});
                 
-                setTimeout(() => bolt.remove(), 250);
-            }, i * 120);
+                setTimeout(() => bolt.remove(), 300);
+            }, i * 150);
         }
     }
-    setInterval(createLightning, Math.random() * 4000 + 3000);
+    setInterval(createLightning, Math.random() * 5000 + 4000);
 
-    function showSystemStart() {
+    window.showSystemStart = function() {
         const popup = document.getElementById('systemPopup');
         popup.classList.add('show');
         setTimeout(() => { popup.classList.remove('show'); }, 1500);
@@ -420,14 +418,14 @@ footer {
     var player;
     var isPlaying = false;
 
-    function onYouTubeIframeAPIReady() {
+    window.onYouTubeIframeAPIReady = function() {
         player = new YT.Player('player', {
             height: '0', width: '0', videoId: 'QKY9jEIXfVQ',
             playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': 'QKY9jEIXfVQ' }
         });
     }
 
-    function toggleMusic() {
+    window.toggleMusic = function() {
         var btn = document.getElementById("musicToggle");
         if (player && typeof player.playVideo === 'function') {
             if (isPlaying) {
@@ -440,8 +438,9 @@ footer {
             isPlaying = !isPlaying;
         }
     }
+});
 </script>
 <div id="player" style="display:none;"></div>
 
 </body>
-                                                                   </html>
+    </html>
