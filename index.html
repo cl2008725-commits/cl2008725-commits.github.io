@@ -78,7 +78,6 @@ header {
     padding: 60px 20px 35px;
 }
 
-/* ෆොටෝ එක සඳහා Glow වෙන Frame එක */
 .logo {
     width: 140px;
     height: 140px;
@@ -284,13 +283,12 @@ footer {
 
 <body>
 
-<audio id="myAudio" loop>
-  <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3" type="audio/mpeg">
-</audio>
+<!-- Smokio Rap Audio Embed Container -->
+<div id="player" style="display:none;"></div>
 
 <div class="lightning"></div>
 
-<button class="music-btn" onclick="toggleMusic()" id="musicToggle">🎵 Play Music</button>
+<button class="music-btn" onclick="toggleMusic()" id="musicToggle">🎵 Play Smokio</button>
 
 <div class="container">
 
@@ -350,6 +348,8 @@ footer {
 
 </div>
 
+<!-- YouTube Player API Load -->
+<script src="https://www.youtube.com/iframe_api"></script>
 <script>
     // මල් ඇනිමේෂන් එක
     function createFlower() {
@@ -371,24 +371,40 @@ footer {
 
     setInterval(createFlower, 400);
 
-    // Audio Play/Pause Function
-    var audio = document.getElementById("myAudio");
-    var btn = document.getElementById("musicToggle");
+    // YouTube Player Setup for Smokio Track
+    var player;
     var isPlaying = false;
 
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            height: '0',
+            width: '0',
+            videoId: 'QKY9jEIXfVQ',
+            playerVars: {
+                'autoplay': 0,
+                'controls': 0,
+                'loop': 1,
+                'playlist': 'QKY9jEIXfVQ'
+            }
+        });
+    }
+
     function toggleMusic() {
-        if (isPlaying) {
-            audio.pause();
-            btn.innerHTML = "🎵 Play Music";
-            btn.style.background = "rgba(0, 0, 0, 0.7)";
-            btn.style.color = "white";
-        } else {
-            audio.play();
-            btn.innerHTML = "⏸️ Pause Music";
-            btn.style.background = "#00eaff";
-            btn.style.color = "black";
+        var btn = document.getElementById("musicToggle");
+        if (player && typeof player.playVideo === 'function') {
+            if (isPlaying) {
+                player.pauseVideo();
+                btn.innerHTML = "🎵 Play srilanka Smokio Rap-කාචල් කාසි-";
+                btn.style.background = "rgba(0, 0, 0, 0.7)";
+                btn.style.color = "white";
+            } else {
+                player.playVideo();
+                btn.innerHTML = "⏸️ Pause Music";
+                btn.style.background = "#00eaff";
+                btn.style.color = "black";
+            }
+            isPlaying = !isPlaying;
         }
-        isPlaying = !isPlaying;
     }
 </script>
 
